@@ -21,7 +21,9 @@ struct coctx
 };
 
 extern "C" {
-extern void coctx_swap(coctx* ,coctx*) asm("coctx_swap");
-}
+// save current register's state to fitst coctx, and from second coctx take out register's state to assign register
+extern void coctx_swap(coctx *, coctx *) asm("coctx_swap");
+
+};
 
 #endif

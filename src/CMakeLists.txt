@@ -1,0 +1,5 @@
+aux_source_directory(. DIR_COROUTINE_SRCS)
+enable_language(C ASM)
+set(COXTX coctx_swap.s)
+add_library(coroutine ${DIR_COROUTINE_SRCS} ${COXTX})
+target_link_libraries(coroutine pthread)

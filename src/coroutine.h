@@ -6,19 +6,18 @@
 
 class Coroutine
 {
-    using ptr = std::shared_ptr<Coroutine>;
-
 private:
     Coroutine();
 public:
     Coroutine(int size,std::function<void()> cb);
     ~Coroutine();
-
+    using ptr = std::shared_ptr<Coroutine>;
     void SetCallback(std::function<void()> cb);
 public:
     static void Yield();
     static void Resume(Coroutine* cor);
-    static Coroutine* GetInstance();
+    static Coroutine* GetCurrentCoroutine();
+    static Coroutine* GetMainCoroutine();
 
 private:
     int m_cor_id; //协程Id
