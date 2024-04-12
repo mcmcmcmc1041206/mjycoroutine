@@ -3,6 +3,7 @@
 #include <string.h>
 #include <iostream>
 #include <thread>
+#include <assert.h>
 
 static thread_local Coroutine* t_main_coroutine = nullptr;
 static thread_local Coroutine* t_cur_coroutine = nullptr;
@@ -30,6 +31,18 @@ Coroutine::Coroutine()
     t_main_coroutine = this;
     t_cur_coroutine = this;
     //日志打印
+}
+
+Coroutine::Coroutine(int size, char* stack_ptr) : m_stack_size(size), m_stack_sp(stack_ptr) {
+  assert(stack_ptr);
+
+  if (!t_main_coroutine) {
+    t_main_coroutine = new Coroutine();
+  }
+
+  m_cor_id = g_cur_coroutine_id++;
+  g_coroutine_count++;
+  // DebugLog << "coroutine[" << m_cor_id << "] create";
 }
 
 Coroutine::Coroutine(int size,std::function<void()> cb)
